@@ -20,7 +20,7 @@ public class Specialist {
 	@JoinColumn(name = "profile_id", referencedColumnName = "id")
 	private Profile profile;
 
-	@Column(name = "specialty", length = 64)
+	@Column(name = "specialty", length = 64, nullable = false)
 	private String specialty;
 
 }

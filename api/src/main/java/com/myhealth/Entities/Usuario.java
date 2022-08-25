@@ -12,10 +12,10 @@ public class Usuario {
 	@Id
 	private Long id;
 
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	private String email;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@OneToOne(mappedBy = "user")

@@ -26,17 +26,17 @@ public class Profile {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private Usuario user;
 
-	@Column(name = "name", length = 32)
+	@Column(name = "name", length = 32, nullable = false)
 	private String name;
 
-	@Column(name = "last_name", length = 32)
+	@Column(name = "last_name", length = 32, nullable = false)
 	private String lastName;
 
-	@Column(name = "gender", length = 16)
+	@Column(name = "gender", length = 16, nullable = false)
 	private String gender;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "birth_date")
+	@Column(name = "birth_date", nullable = false)
 	Date birthDate;
 
 	@Column(name = "image_url", length = 65536)
