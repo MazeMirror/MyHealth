@@ -3,8 +3,8 @@ package com.myhealth.Services;
 import javax.transaction.Transactional;
 
 import com.myhealth.Common.EntityDtoConverter;
-import com.myhealth.Dto.RoleDtoRequest;
-import com.myhealth.Dto.RoleDtoResponse;
+import com.myhealth.Dto.Requests.RoleDtoRequest;
+import com.myhealth.Dto.Responses.RoleDtoResponse;
 import com.myhealth.Entities.Role;
 import com.myhealth.Repositories.RoleRepository;
 
@@ -28,9 +28,12 @@ public class RoleService {
 	public RoleDtoResponse getRole(Long id) {
 		Role role = roleRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("role not found"));
-
 		return entityDtoConverter.convertRoleToDto(role);
 
+	}
+
+	public void deleteRole(Long id) {
+		roleRepository.deleteById(id);
 	}
 
 }

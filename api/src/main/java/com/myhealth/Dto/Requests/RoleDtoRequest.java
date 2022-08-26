@@ -1,4 +1,4 @@
-package com.myhealth.Dto;
+package com.myhealth.Dto.Requests;
 
 import lombok.Data;
 

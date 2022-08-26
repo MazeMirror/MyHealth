@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.myhealth.Dto.RoleDtoRequest;
+import com.myhealth.Dto.Requests.RoleDtoRequest;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,6 @@ public class Role {
 
 	public Role(RoleDtoRequest roleDtoRequest) {
 		this.name = roleDtoRequest.getName();
-
 	}
 
 }
