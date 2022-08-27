@@ -2,7 +2,6 @@ package com.myhealth.Controllers;
 
 import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.UserDtoResponse;
-import com.myhealth.Entities.User;
 import com.myhealth.Services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

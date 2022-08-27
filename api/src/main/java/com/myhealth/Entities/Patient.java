@@ -1,11 +1,21 @@
 package com.myhealth.Entities;
 
-import com.myhealth.Dto.Requests.SpecialistDtoRequest;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -13,34 +23,32 @@ import java.util.List;
 @NoArgsConstructor
 public class Patient {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "profile_id", nullable = false)
-//    private Profile profile;
+	// @ManyToOne
+	// @JoinColumn(name = "profile_id", nullable = false)
+	// private Profile profile;
 
-    @OneToOne
-    @JoinColumn(name = "profile_id", referencedColumnName = "id", unique = true)
-    private Profile profile;
+	@OneToOne
+	@JoinColumn(name = "profile_id", referencedColumnName = "id", unique = true)
+	private Profile profile;
 
-    @Column(name="height")
-    private Long height;
+	@Column(name = "height")
+	private Long height;
 
-    @Column(name="weight")
-    private Long weight;
+	@Column(name = "weight")
+	private Long weight;
 
-    @Column(name="emergency_phone")
-    private String emergencyPhone;
+	@Column(name = "emergency_phone")
+	private String emergencyPhone;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST,CascadeType.MERGE}
-            , mappedBy = "patients")
-    private List<Specialist> specialistsPatients;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "patients")
+	private List<Specialist> specialistsPatients;
 
-    public Patient(Profile profile) {
-        this.profile = profile;
-    }
+	public Patient(Profile profile) {
+		this.profile = profile;
+	}
 
 }

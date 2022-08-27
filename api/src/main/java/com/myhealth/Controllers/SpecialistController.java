@@ -1,23 +1,14 @@
 package com.myhealth.Controllers;
 
+import java.util.List;
+
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
-
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.Specialist;
-import com.myhealth.Entities.WeeklyGoal;
 import com.myhealth.Services.SpecialistService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-
-import com.myhealth.Entities.Specialist;
-import com.myhealth.Services.SpecialistService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/specialist")
@@ -52,31 +38,32 @@ public class SpecialistController {
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 	}
 
-
 	@PostMapping("{specialistId}/patients/{patientId}")
-	public ResponseEntity<Specialist> assignSpecialistPatient(@PathVariable Long specialistId,@PathVariable Long patientId){
+	public ResponseEntity<Specialist> assignSpecialistPatient(@PathVariable Long specialistId,
+			@PathVariable Long patientId) {
 		Specialist specialist = specialistService.assignSpecialistPatient(specialistId, patientId);
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/{specialistId}/patients")
-	public ResponseEntity<List<Patient>> getAllPatientsBySpecialistId(@PathVariable Long specialistId){
-		try{
-			List<Patient> patients=specialistService.getAllPatientsBySpecialistId(specialistId);
+	public ResponseEntity<List<Patient>> getAllPatientsBySpecialistId(@PathVariable Long specialistId) {
+		try {
+			List<Patient> patients = specialistService.getAllPatientsBySpecialistId(specialistId);
 			return new ResponseEntity<List<Patient>>(patients, HttpStatus.OK);
-		}
-		catch(Exception ex){
+		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-//
-//	@PostMapping("{specialistId}/patients/{patientId}")
-//	public ResponseEntity<Specialist> unassignSpecialistPatient(@PathVariable Long specialistId,@PathVariable Long patientId){
-//		Specialist specialist = specialistService.unAssignSpecialistPatient(specialistId, patientId);
-//		return ResponseEntity.ok(specialist);
-//
-//	}
+	//
+	// @PostMapping("{specialistId}/patients/{patientId}")
+	// public ResponseEntity<Specialist> unassignSpecialistPatient(@PathVariable
+	// Long specialistId,@PathVariable Long patientId){
+	// Specialist specialist =
+	// specialistService.unAssignSpecialistPatient(specialistId, patientId);
+	// return ResponseEntity.ok(specialist);
+	//
+	// }
 
 }
