@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,8 +32,9 @@ public class Patient {
 	// @JoinColumn(name = "profile_id", nullable = false)
 	// private Profile profile;
 
-	@OneToOne
-	@JoinColumn(name = "profile_id", referencedColumnName = "id", unique = true)
+	@OneToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "profile_id",nullable = true)
+	@JsonIgnore
 	private Profile profile;
 
 	@Column(name = "height")
@@ -47,8 +49,8 @@ public class Patient {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "patients")
 	private List<Specialist> specialistsPatients;
 
-	public Patient(Profile profile) {
-		this.profile = profile;
-	}
+//	public Patient(Profile profile) {
+//		this.profile = profile;
+//	}
 
 }

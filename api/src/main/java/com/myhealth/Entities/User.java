@@ -26,8 +26,8 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@OneToOne(mappedBy = "user")
-	private Profile profile;
+//	@OneToOne(mappedBy = "user")
+//	private Profile profile;
 
 	public User(UserDtoRequest userDtoRequest) {
 		this.email = userDtoRequest.getEmail();

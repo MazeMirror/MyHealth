@@ -2,18 +2,9 @@ package com.myhealth.Entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myhealth.Dto.Requests.ProfileDtoRequest;
 
 import lombok.Data;
@@ -28,8 +19,13 @@ public class Profile {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
+//	@OneToOne
+//	@JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
+//	private User user;
+
+	@OneToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "user_id",nullable = true)
+	@JsonIgnore
 	private User user;
 
 	@Column(name = "name", length = 32, nullable = false)
@@ -51,8 +47,8 @@ public class Profile {
 	@OneToOne(mappedBy = "profile")
 	private Specialist specialist;
 
-	@OneToOne(mappedBy = "profile")
-	private Patient patient;
+//	@OneToOne(mappedBy = "profile")
+//	private Patient patient;
 
 
 	@ManyToOne
