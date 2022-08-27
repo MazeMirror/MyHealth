@@ -39,6 +39,6 @@ public class RoleController {
 	public ResponseEntity<String> deleteRole(@PathVariable Long id)
 			throws RuntimeException {
 		roleService.deleteRole(id);
-		return new ResponseEntity<>("Deleted role" + id, HttpStatus.OK);
+		return new ResponseEntity<>("Deleted role" + id, HttpStatus.ACCEPTED);
 	}
 }

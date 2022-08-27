@@ -7,6 +7,7 @@ import com.myhealth.Services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,15 @@ public class ProfileController {
 			throws RuntimeException {
 		ProfileDtoResponse profile = profileService.postProfile(profileDtoRequest);
 		return new ResponseEntity<>(profile, HttpStatus.OK);
+	}
+
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteSpecialist(@PathVariable Long id) {
+		if (!profileService.deleteProfile(id)) {
+			return new ResponseEntity<>(id + " couldn't be deleted", HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(id + " deleted succesfully", HttpStatus.ACCEPTED);
+		}
 	}
 
 }

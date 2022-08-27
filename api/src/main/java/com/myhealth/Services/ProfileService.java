@@ -46,4 +46,14 @@ public class ProfileService {
 		return entityDtoConverter.convertProfileToDto(profile);
 	}
 
+	public Boolean deleteProfile(Long id) {
+		if (profileRepository.existsById(id)) {
+			roleRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 }

@@ -5,7 +5,6 @@ import javax.transaction.Transactional;
 import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.UserDtoResponse;
-import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.User;
 import com.myhealth.Repositories.ProfileRepository;
 import com.myhealth.Repositories.UserRepository;
