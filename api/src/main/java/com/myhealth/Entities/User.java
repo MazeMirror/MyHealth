@@ -5,13 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.myhealth.Dto.Requests.UserDtoRequest;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
@@ -26,8 +27,8 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-//	@OneToOne(mappedBy = "user")
-//	private Profile profile;
+	// @OneToOne(mappedBy = "user")
+	// private Profile profile;
 
 	public User(UserDtoRequest userDtoRequest) {
 		this.email = userDtoRequest.getEmail();
