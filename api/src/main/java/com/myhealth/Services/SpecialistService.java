@@ -5,10 +5,15 @@ import javax.transaction.Transactional;
 import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
+
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.Specialist;
 import com.myhealth.Repositories.PatientRepository;
+
+import com.myhealth.Entities.Profile;
+import com.myhealth.Entities.Specialist;
+
 import com.myhealth.Repositories.ProfileRepository;
 import com.myhealth.Repositories.SpecialistRepository;
 
@@ -19,6 +24,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 @Transactional
 @Service
@@ -72,5 +79,4 @@ public class SpecialistService {
 					return patients;
 				}).orElseThrow(() -> new RuntimeException("Specialist not found"));
 	}
-
 }

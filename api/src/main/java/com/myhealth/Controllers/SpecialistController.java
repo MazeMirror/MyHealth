@@ -2,6 +2,7 @@ package com.myhealth.Controllers;
 
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
+
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.Specialist;
 import com.myhealth.Entities.WeeklyGoal;
@@ -11,6 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import com.myhealth.Entities.Specialist;
+import com.myhealth.Services.SpecialistService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/specialist")
@@ -42,6 +51,7 @@ public class SpecialistController {
 		SpecialistDtoResponse specialist = specialistService.postSpecialist(specialistDtoRequest);
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 	}
+
 
 	@PostMapping("{specialistId}/patients/{patientId}")
 	public ResponseEntity<Specialist> assignSpecialistPatient(@PathVariable Long specialistId,@PathVariable Long patientId){
