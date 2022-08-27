@@ -2,12 +2,18 @@ package com.myhealth.Controllers;
 
 import com.myhealth.Dto.Requests.ProfileDtoRequest;
 import com.myhealth.Dto.Responses.ProfileDtoResponse;
+
+import com.myhealth.Entities.Patient;
+import com.myhealth.Services.PatientService;
+
 import com.myhealth.Services.ProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +28,9 @@ public class ProfileController {
 	@Autowired
 	ProfileService profileService;
 
+	@Autowired
+	PatientService patientService;
+
 	@GetMapping("{id}")
 	public ResponseEntity<ProfileDtoResponse> getProfile(@PathVariable Long id) throws RuntimeException {
 		ProfileDtoResponse profile = profileService.getProfile(id);
@@ -35,6 +44,14 @@ public class ProfileController {
 		return new ResponseEntity<>(profile, HttpStatus.OK);
 	}
 
+
+	@PostMapping(path = "{profileId}/patient")
+	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient,@PathVariable("profileId") Long profileId){
+
+		Patient patient1 = patientService.createPatient(patient,profileId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(patient1);
+	}
+  
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteSpecialist(@PathVariable Long id) {
 		if (!profileService.deleteProfile(id)) {
@@ -43,5 +60,6 @@ public class ProfileController {
 			return new ResponseEntity<>(id + " deleted succesfully", HttpStatus.ACCEPTED);
 		}
 	}
+
 
 }

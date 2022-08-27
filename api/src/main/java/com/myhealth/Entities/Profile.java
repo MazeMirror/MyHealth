@@ -51,6 +51,10 @@ public class Profile {
 	@OneToOne(mappedBy = "profile")
 	private Specialist specialist;
 
+	@OneToOne(mappedBy = "profile")
+	private Patient patient;
+
+
 	@ManyToOne
 	@JoinColumn(name = "role_id", nullable = false)
 	private Role role;
