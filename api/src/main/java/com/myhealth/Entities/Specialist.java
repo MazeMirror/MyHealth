@@ -1,23 +1,24 @@
 package com.myhealth.Entities;
 
-import javax.persistence.*;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -32,12 +33,9 @@ public class Specialist {
 	@JoinColumn(name = "profile_id", referencedColumnName = "id", unique = true)
 	private Profile profile;
 
-
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade ={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinTable(name = "specialists_patients",
-			joinColumns = {@JoinColumn(name = "specialist_id")},
-			inverseJoinColumns = {@JoinColumn(name = "patient_id")})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "specialists_patients", joinColumns = {
+			@JoinColumn(name = "specialist_id") }, inverseJoinColumns = { @JoinColumn(name = "patient_id") })
 	private List<Patient> patients;
 
 	@Column(name = "specialty", length = 64, nullable = false)
@@ -48,17 +46,22 @@ public class Specialist {
 		this.specialty = specialistDtoRequest.getSpecialty();
 	}
 
-	public List<Patient> getPatientSpecialists(){return patients;}
+	public List<Patient> getPatientSpecialists() {
+		return patients;
+	}
 
-	public boolean hasPatient(Patient patient){return this.getPatientSpecialists().contains(patient);}
-	public Specialist assignWith(Patient patient){
-		if(!this.hasPatient(patient))
+	public boolean hasPatient(Patient patient) {
+		return this.getPatientSpecialists().contains(patient);
+	}
+
+	public Specialist assignWith(Patient patient) {
+		if (!this.hasPatient(patient))
 			this.getPatientSpecialists().add(patient);
 		return this;
 	}
 
-	public Specialist unassignWith(Patient patient){
-		if(this.hasPatient(patient))
+	public Specialist unassignWith(Patient patient) {
+		if (this.hasPatient(patient))
 			this.getPatientSpecialists().remove(patient);
 		return this;
 	}
