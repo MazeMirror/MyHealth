@@ -9,6 +9,4 @@ public class UserDtoResponse {
 	private String email;
 
 	private String password;
-
-	private Long profile_id;
 }

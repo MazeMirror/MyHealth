@@ -30,8 +30,8 @@ public class Specialist {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY,optional = false)
-	@JoinColumn(name = "profile_id",nullable = true)
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "profile_id", nullable = true)
 	@JsonIgnore
 	private Profile profile;
 
