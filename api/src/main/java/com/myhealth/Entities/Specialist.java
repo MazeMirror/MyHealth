@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 
 import lombok.Data;
@@ -29,8 +30,9 @@ public class Specialist {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "profile_id", referencedColumnName = "id", unique = true)
+	@OneToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "profile_id",nullable = true)
+	@JsonIgnore
 	private Profile profile;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

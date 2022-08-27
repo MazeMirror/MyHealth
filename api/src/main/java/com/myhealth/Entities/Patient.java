@@ -47,6 +47,7 @@ public class Patient {
 	private String emergencyPhone;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "patients")
+	@JsonIgnore
 	private List<Specialist> specialistsPatients;
 
 //	public Patient(Profile profile) {

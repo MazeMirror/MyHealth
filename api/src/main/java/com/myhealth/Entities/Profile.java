@@ -44,8 +44,8 @@ public class Profile {
 	@Column(name = "image_url", length = 65536)
 	private String imageUrl;
 
-	@OneToOne(mappedBy = "profile")
-	private Specialist specialist;
+//	@OneToOne(mappedBy = "profile")
+//	private Specialist specialist;
 
 //	@OneToOne(mappedBy = "profile")
 //	private Patient patient;

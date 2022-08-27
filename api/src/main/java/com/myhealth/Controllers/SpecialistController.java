@@ -11,12 +11,7 @@ import com.myhealth.Services.SpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/specialist")
@@ -42,6 +37,14 @@ public class SpecialistController {
 	public ResponseEntity<Specialist> assignSpecialistPatient(@PathVariable Long specialistId,
 			@PathVariable Long patientId) {
 		Specialist specialist = specialistService.assignSpecialistPatient(specialistId, patientId);
+		return new ResponseEntity<>(specialist, HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("{specialistId}/patients/{patientId}")
+	public ResponseEntity<Specialist> unassignSpecialistPatient(@PathVariable Long specialistId,
+															  @PathVariable Long patientId) {
+		Specialist specialist = specialistService.unAssignSpecialistPatient(specialistId, patientId);
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 
 	}
