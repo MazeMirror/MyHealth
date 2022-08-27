@@ -1,5 +1,7 @@
 package com.myhealth.Services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.myhealth.Common.EntityDtoConverter;
@@ -33,6 +35,11 @@ public class UserService {
 	public UserDtoResponse postUser(UserDtoRequest userDtoRequest) {
 		User user = userRepository.save(new User(userDtoRequest));
 		return entityDtoConverter.convertUserToDto(user);
+	}
+
+	public List<UserDtoResponse> getUsers() {
+		List<User> users = userRepository.findAll();
+		return entityDtoConverter.convertUsersToDto(users);
 	}
 
 }

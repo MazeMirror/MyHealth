@@ -1,5 +1,7 @@
 package com.myhealth.Controllers;
 
+import java.util.List;
+
 import com.myhealth.Dto.Requests.ProfileDtoRequest;
 import com.myhealth.Dto.Responses.ProfileDtoResponse;
 
@@ -31,6 +33,12 @@ public class ProfileController {
 	@Autowired
 	PatientService patientService;
 
+	@GetMapping
+	public ResponseEntity<List<ProfileDtoResponse>> getProfiles() throws RuntimeException {
+		List<ProfileDtoResponse> profiles = profileService.getProfiles();
+		return new ResponseEntity<>(profiles, HttpStatus.OK);
+	}
+
 	@GetMapping("{id}")
 	public ResponseEntity<ProfileDtoResponse> getProfile(@PathVariable Long id) throws RuntimeException {
 		ProfileDtoResponse profile = profileService.getProfile(id);
@@ -44,14 +52,14 @@ public class ProfileController {
 		return new ResponseEntity<>(profile, HttpStatus.OK);
 	}
 
-
 	@PostMapping(path = "{profileId}/patient")
-	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient,@PathVariable("profileId") Long profileId){
+	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient,
+			@PathVariable("profileId") Long profileId) {
 
-		Patient patient1 = patientService.createPatient(patient,profileId);
+		Patient patient1 = patientService.createPatient(patient, profileId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(patient1);
 	}
-  
+
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteSpecialist(@PathVariable Long id) {
 		if (!profileService.deleteProfile(id)) {
@@ -60,6 +68,5 @@ public class ProfileController {
 			return new ResponseEntity<>(id + " deleted succesfully", HttpStatus.ACCEPTED);
 		}
 	}
-
 
 }

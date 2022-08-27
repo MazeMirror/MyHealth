@@ -1,5 +1,7 @@
 package com.myhealth.Controllers;
 
+import java.util.List;
+
 import com.myhealth.Dto.Requests.RoleDtoRequest;
 import com.myhealth.Dto.Responses.RoleDtoResponse;
 import com.myhealth.Entities.Role;
@@ -22,6 +24,12 @@ public class RoleController {
 
 	@Autowired
 	RoleService roleService;
+
+	@GetMapping
+	public ResponseEntity<List<RoleDtoResponse>> getRoles() throws RuntimeException {
+		List<RoleDtoResponse> roleDtos = roleService.getRoles();
+		return new ResponseEntity<>(roleDtos, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<RoleDtoResponse> getRole(@PathVariable Long id) throws RuntimeException {

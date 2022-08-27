@@ -20,6 +20,12 @@ public class SpecialistController {
 	@Autowired
 	SpecialistService specialistService;
 
+	@GetMapping
+	public ResponseEntity<List<SpecialistDtoResponse>> getSpecialists() throws RuntimeException {
+		List<SpecialistDtoResponse> specialists = specialistService.getSpecialists();
+		return new ResponseEntity<>(specialists, HttpStatus.OK);
+	}
+
 	@GetMapping("{id}")
 	public ResponseEntity<SpecialistDtoResponse> getSpecialist(@PathVariable Long id) throws RuntimeException {
 		SpecialistDtoResponse specialist = specialistService.getSpecialist(id);
@@ -43,7 +49,7 @@ public class SpecialistController {
 
 	@DeleteMapping("{specialistId}/patients/{patientId}")
 	public ResponseEntity<Specialist> unassignSpecialistPatient(@PathVariable Long specialistId,
-															  @PathVariable Long patientId) {
+			@PathVariable Long patientId) {
 		Specialist specialist = specialistService.unAssignSpecialistPatient(specialistId, patientId);
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 

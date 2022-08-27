@@ -1,5 +1,7 @@
 package com.myhealth.Controllers;
 
+import java.util.List;
+
 import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.UserDtoResponse;
 import com.myhealth.Services.UserService;
@@ -19,6 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	@Autowired
 	UserService userService;
+
+	@GetMapping
+	public ResponseEntity<List<UserDtoResponse>> getUsers() throws RuntimeException {
+		List<UserDtoResponse> users = userService.getUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<UserDtoResponse> getUser(@PathVariable Long id) throws RuntimeException {

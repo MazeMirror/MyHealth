@@ -69,4 +69,9 @@ public class SpecialistService {
 					return patients;
 				}).orElseThrow(() -> new RuntimeException("Specialist not found"));
 	}
+
+	public List<SpecialistDtoResponse> getSpecialists() {
+		List<Specialist> specialists = specialistRepository.findAll();
+		return entityDtoConverter.convertSpecialistsToDto(specialists);
+	}
 }

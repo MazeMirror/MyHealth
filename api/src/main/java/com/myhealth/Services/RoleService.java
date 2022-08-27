@@ -1,5 +1,7 @@
 package com.myhealth.Services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.myhealth.Common.EntityDtoConverter;
@@ -34,6 +36,11 @@ public class RoleService {
 
 	public void deleteRole(Long id) {
 		roleRepository.deleteById(id);
+	}
+
+	public List<RoleDtoResponse> getRoles() {
+		List<Role> roles = roleRepository.findAll();
+		return entityDtoConverter.convertRolesToDto(roles);
 	}
 
 }

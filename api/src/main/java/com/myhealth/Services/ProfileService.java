@@ -1,5 +1,7 @@
 package com.myhealth.Services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.myhealth.Common.EntityDtoConverter;
@@ -54,6 +56,11 @@ public class ProfileService {
 			return false;
 		}
 
+	}
+
+	public List<ProfileDtoResponse> getProfiles() {
+		List<Profile> profiles = profileRepository.findAll();
+		return entityDtoConverter.convertProfilesToDto(profiles);
 	}
 
 }

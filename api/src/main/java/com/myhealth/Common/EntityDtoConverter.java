@@ -1,5 +1,8 @@
 package com.myhealth.Common;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.myhealth.Dto.Responses.ProfileDtoResponse;
 import com.myhealth.Dto.Responses.RoleDtoResponse;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
@@ -24,16 +27,32 @@ public class EntityDtoConverter {
 		return modelMapper.map(role, RoleDtoResponse.class);
 	}
 
+	public List<RoleDtoResponse> convertRolesToDto(List<Role> roles) {
+		return roles.stream().map(this::convertRoleToDto).collect(Collectors.toList());
+	}
+
 	public UserDtoResponse convertUserToDto(User user) {
 		return modelMapper.map(user, UserDtoResponse.class);
+	}
+
+	public List<UserDtoResponse> convertUsersToDto(List<User> users) {
+		return users.stream().map(this::convertUserToDto).collect(Collectors.toList());
 	}
 
 	public ProfileDtoResponse convertProfileToDto(Profile profile) {
 		return modelMapper.map(profile, ProfileDtoResponse.class);
 	}
 
+	public List<ProfileDtoResponse> convertProfilesToDto(List<Profile> profiles) {
+		return profiles.stream().map(this::convertProfileToDto).collect(Collectors.toList());
+	}
+
 	public SpecialistDtoResponse convertSpecialistToDto(Specialist specialist) {
 		return modelMapper.map(specialist, SpecialistDtoResponse.class);
+	}
+
+	public List<SpecialistDtoResponse> convertSpecialistsToDto(List<Specialist> specialists) {
+		return specialists.stream().map(this::convertSpecialistToDto).collect(Collectors.toList());
 	}
 
 }
