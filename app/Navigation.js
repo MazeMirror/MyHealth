@@ -4,10 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //screens
 import HomeScreen from "./screens/Homescreen";
-/* import SettingsScreen from "./screens/SettingsScreen";
-import StackScreen from "./screens/StackScreen"; */
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Image } from "react-native";
+import MealPlan from "./screens/MealPlan";
 
 //import MaterialCommunityIcons from 'react-native-vector-icons/AntDesign';
 
@@ -35,8 +34,8 @@ function MyStack(){
                    }} */
             />
 {/*             <HomeStackNavigator.Screen
-                name="Stack"
-                component={StackScreen}
+                name="Plan Alimenticio"
+                component={MealPlan}
             /> */}
         </HomeStackNavigator.Navigator>
     )
@@ -55,7 +54,20 @@ function MyTabs() {
             options={{
                 headerShown:false,
                 tabBarIcon:({color,size})=>(
-                    <Icon name="home" color="#FF7E10" size={size}/>
+                    <Icon name="home" color={color} size={size} /> 
+                    
+                )  
+            }}
+            />
+
+            <Tab.Screen 
+            name="Plan Alimenticio" 
+            component={MealPlan} 
+            options={{
+                headerShown:false,
+                tabBarIcon:({color,size})=>(
+                    <Image name="home" color={color} size={size} source={require('./assets/diet.png')}/> 
+                    
                 )  
             }}
             />

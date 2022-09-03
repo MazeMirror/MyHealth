@@ -13,17 +13,6 @@ const HomeScreen=()=>{
 
     const [modalVisible, setModalVisible] = useState(false);
 
-/* moment.locale();      
-
-var startOfWeeks = moment().startOf('week').toDate();
-var endOfWeeks   = moment().endOf('week').toDate();
-
-startOfWeeks=moment().format('ll');
-endOfWeeks=moment().format('ll');
-
-console.log(startOfWeeks);
-console.log(endOfWeeks); */
-
     const start = startOfWeek(new Date(), {weekStartsOn: 1});
     const end = endOfWeek(new Date(), {weekStartsOn: 1});
 
