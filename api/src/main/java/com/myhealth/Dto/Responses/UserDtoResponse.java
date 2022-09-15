@@ -8,5 +8,5 @@ public class UserDtoResponse {
 
 	private String email;
 
-	private String password;
+	//private String password;
 }

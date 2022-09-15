@@ -37,6 +37,12 @@ public class UserService {
 		return entityDtoConverter.convertUserToDto(user);
 	}
 
+	public UserDtoResponse authenticateUser(UserDtoRequest userDtoRequest) {
+		User user = userRepository.findByEmailAndPassword(userDtoRequest.getEmail(),userDtoRequest.getPassword())
+				.orElseThrow(() -> new RuntimeException("Invalid Email or Password"));
+		return entityDtoConverter.convertUserToDto(user);
+	}
+
 	public List<UserDtoResponse> getUsers() {
 		List<User> users = userRepository.findAll();
 		return entityDtoConverter.convertUsersToDto(users);
