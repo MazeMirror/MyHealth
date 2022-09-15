@@ -37,6 +37,12 @@ public class SpecialistService {
 				.orElseThrow(() -> new RuntimeException("Specialist not found"));
 		return entityDtoConverter.convertSpecialistToDto(specialist);
 	}
+	//getSpecialistByProfileId
+	public SpecialistDtoResponse getSpecialistByProfileId(Long profileId) {
+		Specialist specialist = specialistRepository.findByProfileId(profileId)
+				.orElseThrow(() -> new RuntimeException("Specialist not found by profileId"));
+		return entityDtoConverter.convertSpecialistToDto(specialist);
+	}
 
 	public SpecialistDtoResponse postSpecialist(SpecialistDtoRequest specialistDtoRequest) {
 		Profile profile = profileRepository.findById(specialistDtoRequest.getProfileId())
@@ -64,10 +70,7 @@ public class SpecialistService {
 
 	public List<Patient> getAllPatientsBySpecialistId(Long specialistId) {
 		return specialistRepository.findById(specialistId).map(
-				specialist -> {
-					List<Patient> patients = specialist.getPatients();
-					return patients;
-				}).orElseThrow(() -> new RuntimeException("Specialist not found"));
+				Specialist::getPatients).orElseThrow(() -> new RuntimeException("Specialist not found"));
 	}
 
 	public List<SpecialistDtoResponse> getSpecialists() {

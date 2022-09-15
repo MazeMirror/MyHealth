@@ -3,13 +3,16 @@ package com.myhealth.Controllers;
 import java.util.List;
 
 import com.myhealth.Dto.Requests.ProfileDtoRequest;
+import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Dto.Responses.ProfileDtoResponse;
 
+import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Services.PatientService;
 
 import com.myhealth.Services.ProfileService;
 
+import com.myhealth.Services.SpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,9 @@ public class ProfileController {
 	@Autowired
 	PatientService patientService;
 
+	@Autowired
+	SpecialistService specialistService;
+
 	@GetMapping
 	public ResponseEntity<List<ProfileDtoResponse>> getProfiles() throws RuntimeException {
 		List<ProfileDtoResponse> profiles = profileService.getProfiles();
@@ -46,18 +52,32 @@ public class ProfileController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ProfileDtoResponse> postSpecialist(@RequestBody ProfileDtoRequest profileDtoRequest)
+	public ResponseEntity<ProfileDtoResponse> postProfile(@RequestBody ProfileDtoRequest profileDtoRequest)
 			throws RuntimeException {
 		ProfileDtoResponse profile = profileService.postProfile(profileDtoRequest);
 		return new ResponseEntity<>(profile, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "{profileId}/patient")
-	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient,
+	public ResponseEntity<Patient> postPatient(@RequestBody Patient patient,
 			@PathVariable("profileId") Long profileId) {
 
 		Patient patient1 = patientService.createPatient(patient, profileId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(patient1);
+	}
+
+	@GetMapping(path = "{profileId}/patient")
+	public ResponseEntity<PatientDtoResponse> getPatientByProfileId(@PathVariable("profileId") Long profileId) {
+
+		PatientDtoResponse patient = patientService.getPatientByProfileId(profileId);
+		return new ResponseEntity<>(patient, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "{profileId}/specialist")
+	public ResponseEntity<SpecialistDtoResponse> getSpecialistByProfileId(@PathVariable("profileId") Long profileId) {
+
+		SpecialistDtoResponse specialist = specialistService.getSpecialistByProfileId(profileId);
+		return new ResponseEntity<>(specialist, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")

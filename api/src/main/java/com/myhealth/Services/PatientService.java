@@ -1,7 +1,9 @@
 package com.myhealth.Services;
+import com.myhealth.Common.EntityDtoConverter;
 
 import java.util.List;
 
+import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Repositories.PatientRepository;
 import com.myhealth.Repositories.ProfileRepository;
@@ -18,6 +20,9 @@ public class PatientService {
 	@Autowired
 	private ProfileRepository profileRepository;
 
+	@Autowired
+	EntityDtoConverter entityDtoConverter;
+
 	public List<Patient> findAll() throws Exception {
 		return patientRepository.findAll();
 	}
@@ -29,6 +34,14 @@ public class PatientService {
 					patient.setProfile(profile);
 					return patientRepository.save(patient);
 				}).orElseThrow(() -> new RuntimeException("profile not found"));
+	}
+
+	//getPatientByProfileId
+
+	public PatientDtoResponse getPatientByProfileId(Long profileId) {
+		Patient patient = patientRepository.findByProfileId(profileId)
+				.orElseThrow(() -> new RuntimeException("Profile not found"));
+		return entityDtoConverter.convertPatientToDto(patient);
 	}
 
 }

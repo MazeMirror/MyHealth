@@ -3,14 +3,8 @@ package com.myhealth.Common;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.myhealth.Dto.Responses.ProfileDtoResponse;
-import com.myhealth.Dto.Responses.RoleDtoResponse;
-import com.myhealth.Dto.Responses.SpecialistDtoResponse;
-import com.myhealth.Dto.Responses.UserDtoResponse;
-import com.myhealth.Entities.Profile;
-import com.myhealth.Entities.Role;
-import com.myhealth.Entities.Specialist;
-import com.myhealth.Entities.User;
+import com.myhealth.Dto.Responses.*;
+import com.myhealth.Entities.*;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -49,6 +43,10 @@ public class EntityDtoConverter {
 
 	public SpecialistDtoResponse convertSpecialistToDto(Specialist specialist) {
 		return modelMapper.map(specialist, SpecialistDtoResponse.class);
+	}
+
+	public PatientDtoResponse convertPatientToDto(Patient patient) {
+		return modelMapper.map(patient, PatientDtoResponse.class);
 	}
 
 	public List<SpecialistDtoResponse> convertSpecialistsToDto(List<Specialist> specialists) {
