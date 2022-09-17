@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Patient {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	// @ManyToOne
@@ -38,13 +38,13 @@ public class Patient {
 	private Profile profile;
 
 	@Column(name = "height")
-	private Long height;
+	private Double height;
 
 	@Column(name = "weight")
-	private Long weight;
+	private Double weight;
 
 	@Column(name = "emergency_phone")
-	private String emergencyPhone;
+	private Long emergencyPhone;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "patients")
 	@JsonIgnore

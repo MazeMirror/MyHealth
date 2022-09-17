@@ -10,9 +10,9 @@ public class PatientDtoResponse {
 
     private Long profileId;
 
-    private Long height;
+    private Double height;
 
-    private Long weight;
+    private Double weight;
 
-    private String emergencyPhone;
+    private Long emergencyPhone;
 }
