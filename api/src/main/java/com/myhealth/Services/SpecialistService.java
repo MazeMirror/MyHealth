@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
+import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.Profile;
@@ -68,9 +69,10 @@ public class SpecialistService {
 				.orElseThrow(() -> new RuntimeException("Specialist not found"));
 	}
 
-	public List<Patient> getAllPatientsBySpecialistId(Long specialistId) {
-		return specialistRepository.findById(specialistId).map(
-				Specialist::getPatients).orElseThrow(() -> new RuntimeException("Specialist not found"));
+	public List<PatientDtoResponse> getAllPatientsBySpecialistId(Long specialistId) {
+		var specialist = specialistRepository.findById(specialistId).orElseThrow(() -> new RuntimeException("Specialist not found"));
+		return specialist.getPatients().stream().map(patient -> entityDtoConverter.convertPatientToDto(patient)).toList();
+
 	}
 
 	public List<SpecialistDtoResponse> getSpecialists() {
