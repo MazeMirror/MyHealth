@@ -2,6 +2,7 @@ package com.myhealth.Controllers;
 
 import java.util.List;
 
+import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.MealPlan;
 import com.myhealth.Entities.Patient;
@@ -39,10 +40,10 @@ public class PatientController {
 	private WeeklyGoalService weeklyGoalService;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	private ResponseEntity<List<Patient>> fetchAll() {
+	private ResponseEntity<List<PatientDtoResponse>> fetchAll() {
 		try {
-			List<Patient> patients = patientService.findAll();
-			return new ResponseEntity<List<Patient>>(patients, HttpStatus.OK);
+			List<PatientDtoResponse> patients = patientService.findAll();
+			return new ResponseEntity<List<PatientDtoResponse>>(patients, HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

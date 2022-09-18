@@ -23,8 +23,8 @@ public class PatientService {
 	@Autowired
 	EntityDtoConverter entityDtoConverter;
 
-	public List<Patient> findAll() throws Exception {
-		return patientRepository.findAll();
+	public List<PatientDtoResponse> findAll() throws Exception {
+		return patientRepository.findAll().stream().map(patient -> entityDtoConverter.convertPatientToDto(patient)).toList();
 	}
 
 	public Patient createPatient(Patient patient, Long profileId) {
