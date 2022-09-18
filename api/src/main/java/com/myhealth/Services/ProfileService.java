@@ -69,4 +69,17 @@ public class ProfileService {
 		return entityDtoConverter.convertProfilesToDto(profiles);
 	}
 
+    public ProfileDtoResponse put(Long id, ProfileDtoRequest profileDtoRequest) {
+		User user = userRepository.findById(profileDtoRequest.getUserId())
+				.orElseThrow(() -> new RuntimeException("user specified not found"));
+		Role role = roleRepository.findById(profileDtoRequest.getRoleId())
+				.orElseThrow(() -> new RuntimeException("role specified not found"));
+		Profile profile = profileRepository.findByUserId(id)
+				.orElseThrow(() -> new RuntimeException("profile not found by UserId"));
+
+		var newProfile = new Profile(role, user, profileDtoRequest);
+		newProfile.setId(id);
+		var updatedProfile = profileRepository.save(newProfile);
+		return entityDtoConverter.convertProfileToDto(updatedProfile);
+    }
 }
