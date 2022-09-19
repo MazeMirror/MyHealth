@@ -2,7 +2,10 @@ package com.myhealth.Controllers;
 
 import java.util.List;
 
+import com.myhealth.Dto.Requests.PatientDtoRequest;
+import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import com.myhealth.Dto.Responses.PatientDtoResponse;
+import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.MealPlan;
 import com.myhealth.Entities.Patient;
@@ -16,12 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patient")
@@ -47,6 +45,13 @@ public class PatientController {
 		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@PutMapping(path ="{patientId}")
+	public ResponseEntity<PatientDtoResponse> putPatient(@PathVariable("patientId") Long patientId, @RequestBody PatientDtoRequest patientDtoRequest) throws RuntimeException {
+		//List<UserDtoResponse> users = userService.getUsers();
+		PatientDtoResponse patient = patientService.putPatient(patientId,patientDtoRequest);
+		return new ResponseEntity<>(patient, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "{patientId}/mealPlans")

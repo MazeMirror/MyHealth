@@ -3,8 +3,10 @@ package com.myhealth.Controllers;
 import java.util.List;
 
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
+import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
+import com.myhealth.Dto.Responses.UserDtoResponse;
 import com.myhealth.Entities.Specialist;
 import com.myhealth.Services.SpecialistService;
 
@@ -29,6 +31,13 @@ public class SpecialistController {
 	@GetMapping("{id}")
 	public ResponseEntity<SpecialistDtoResponse> getSpecialist(@PathVariable Long id) throws RuntimeException {
 		SpecialistDtoResponse specialist = specialistService.getSpecialist(id);
+		return new ResponseEntity<>(specialist, HttpStatus.OK);
+	}
+
+	@PutMapping(path ="{specialistId}")
+	public ResponseEntity<SpecialistDtoResponse> putSpecialistSpecialty(@PathVariable("specialistId") Long specialistId, @RequestBody SpecialistDtoRequest specialistDtoRequest) throws RuntimeException {
+		//List<UserDtoResponse> users = userService.getUsers();
+		SpecialistDtoResponse specialist = specialistService.putSpecialty(specialistId,specialistDtoRequest);
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 	}
 

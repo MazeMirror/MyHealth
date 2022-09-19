@@ -3,6 +3,7 @@ import com.myhealth.Common.EntityDtoConverter;
 
 import java.util.List;
 
+import com.myhealth.Dto.Requests.PatientDtoRequest;
 import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Repositories.PatientRepository;
@@ -44,4 +45,16 @@ public class PatientService {
 		return entityDtoConverter.convertPatientToDto(patient);
 	}
 
+    public PatientDtoResponse putPatient(Long patientId, PatientDtoRequest patientDtoRequest) {
+		Patient patient = patientRepository.findById(patientId)
+				.orElseThrow(() -> new RuntimeException("Profile not found"));
+
+		patient.setHeight(patientDtoRequest.getHeight());
+		patient.setWeight(patientDtoRequest.getWeight());
+		patient.setEmergencyPhone(patientDtoRequest.getEmergencyPhone());
+
+		var dto = patientRepository.save(patient);
+
+		return entityDtoConverter.convertPatientToDto(dto);
+    }
 }

@@ -11,6 +11,7 @@ import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.Specialist;
+import com.myhealth.Entities.User;
 import com.myhealth.Repositories.PatientRepository;
 import com.myhealth.Repositories.ProfileRepository;
 import com.myhealth.Repositories.SpecialistRepository;
@@ -79,4 +80,14 @@ public class SpecialistService {
 		List<Specialist> specialists = specialistRepository.findAll();
 		return entityDtoConverter.convertSpecialistsToDto(specialists);
 	}
+
+    public SpecialistDtoResponse putSpecialty(Long id, SpecialistDtoRequest specialistDtoRequest) {
+		Specialist specialist = specialistRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("specialist specified not found"));
+
+		specialist.setSpecialty(specialistDtoRequest.getSpecialty());
+		var dto = specialistRepository.save(specialist);
+
+		return entityDtoConverter.convertSpecialistToDto(dto);
+    }
 }

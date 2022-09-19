@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.UserDtoResponse;
+import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.User;
 import com.myhealth.Repositories.ProfileRepository;
 import com.myhealth.Repositories.UserRepository;
@@ -48,4 +49,16 @@ public class UserService {
 		return entityDtoConverter.convertUsersToDto(users);
 	}
 
+    public UserDtoResponse putUserEmail(Long userId, UserDtoRequest userDtoRequest) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new RuntimeException("user specified not found"));
+
+		var updatedUser = new User();
+		updatedUser.setId(userId);
+		updatedUser.setEmail(userDtoRequest.getEmail());
+		updatedUser.setPassword(user.getPassword());
+		var dto = userRepository.save(updatedUser);
+
+		return entityDtoConverter.convertUserToDto(dto);
+    }
 }
