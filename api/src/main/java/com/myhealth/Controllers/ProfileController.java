@@ -32,9 +32,15 @@ public class ProfileController {
 	@Autowired
 	SpecialistService specialistService;
 
-	@GetMapping
+	/*@GetMapping
 	public ResponseEntity<List<ProfileDtoResponse>> getProfiles() throws RuntimeException {
 		List<ProfileDtoResponse> profiles = profileService.getProfiles();
+		return new ResponseEntity<>(profiles, HttpStatus.OK);
+	}*/
+
+	@GetMapping
+	public ResponseEntity<List<ProfileDtoResponse>> getProfilesByNameAndRoleId(@RequestParam String name,@RequestParam long roleId) throws RuntimeException {
+		List<ProfileDtoResponse> profiles = profileService.getProfilesByNameAndRoleId(name,roleId);
 		return new ResponseEntity<>(profiles, HttpStatus.OK);
 	}
 

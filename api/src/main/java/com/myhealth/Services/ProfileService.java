@@ -82,4 +82,12 @@ public class ProfileService {
 		var updatedProfile = profileRepository.save(newProfile);
 		return entityDtoConverter.convertProfileToDto(updatedProfile);
     }
+
+	public List<ProfileDtoResponse> getProfilesByNameAndRoleId(String name, long roleId) {
+		List<Profile> profilesByName = profileRepository.findProfileByNameContaining(name);
+		//Then
+		var profilesByRoleId = profilesByName.stream().filter(profile -> profile.getRole().getId() == roleId).toList();
+		return entityDtoConverter.convertProfilesToDto(profilesByRoleId);
+	}
+
 }
