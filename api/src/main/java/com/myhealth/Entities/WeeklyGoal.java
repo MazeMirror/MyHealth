@@ -22,17 +22,17 @@ public class WeeklyGoal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "activity")
-	private String activity;
-
 	@Column(name = "quantity")
-	private Long quantity;
+	private double quantity;
 
 	@Column(name = "progress")
-	private Long progress;
+	private double progress;
 
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
 
+	@ManyToOne
+	@JoinColumn(name = "activity_id", nullable = false)
+	private Activity activity;
 }

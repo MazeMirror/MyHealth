@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
+import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,16 +23,24 @@ public class DailyGoal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "activity")
-	private String activity;
-
 	@Column(name = "quantity")
-	private Long quantity;
+	private double quantity;
 
 	@Column(name = "progress")
-	private Long progress;
+	private double progress;
 
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
+
+	@ManyToOne
+	@JoinColumn(name = "activity_id", nullable = false)
+	private Activity activity;
+
+	public DailyGoal(Patient patient, Activity activity,DailyGoalDtoRequest dailyGoalDtoRequest) {
+		this.patient = patient;
+		this.activity = activity;
+		this.progress = dailyGoalDtoRequest.getProgress();
+		this.quantity = dailyGoalDtoRequest.getQuantity();
+	}
 }

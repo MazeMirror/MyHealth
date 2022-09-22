@@ -2,8 +2,10 @@ package com.myhealth.Controllers;
 
 import java.util.List;
 
+import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Requests.PatientDtoRequest;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
+import com.myhealth.Dto.Responses.DailyGoalDtoResponse;
 import com.myhealth.Dto.Responses.PatientDtoResponse;
 import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.DailyGoal;
@@ -71,10 +73,23 @@ public class PatientController {
 	}
 
 	@PostMapping(path = "{patientId}/dailyGoal")
-	public ResponseEntity<DailyGoal> createDailyGoal(@PathVariable("patientId") Long patientId,
-			@RequestBody DailyGoal dailyGoal) {
+	public ResponseEntity<DailyGoalDtoResponse> createDailyGoal(@PathVariable("patientId") Long patientId,
+			@RequestBody DailyGoalDtoRequest dailyGoal) {
 
-		DailyGoal dailyGoal1 = dailyGoalService.createDailyGoal(patientId, dailyGoal);
-		return ResponseEntity.status(HttpStatus.CREATED).body(dailyGoal1);
+		DailyGoalDtoResponse dailyGoalDto = dailyGoalService.createDailyGoal(patientId, dailyGoal);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dailyGoalDto);
+	}
+
+	@GetMapping(path = "{patientId}/dailyGoals")
+	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "activityId",required = false) Long activityId) {
+
+		List<DailyGoalDtoResponse> dailyGoals;
+		if(activityId == null){
+			dailyGoals = dailyGoalService.getDailyGoalsByPatientId(patientId);
+		}
+		else{
+			dailyGoals = dailyGoalService.getDailyGoalsByPatientIdAndActivityId(patientId,activityId);
+		}
+		return new ResponseEntity<>(dailyGoals, HttpStatus.OK);
 	}
 }

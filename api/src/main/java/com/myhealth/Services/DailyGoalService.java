@@ -2,7 +2,11 @@ package com.myhealth.Services;
 
 import java.util.List;
 
+import com.myhealth.Common.EntityDtoConverter;
+import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
+import com.myhealth.Dto.Responses.DailyGoalDtoResponse;
 import com.myhealth.Entities.DailyGoal;
+import com.myhealth.Repositories.ActivityRepository;
 import com.myhealth.Repositories.DailyGoalRepository;
 import com.myhealth.Repositories.PatientRepository;
 
@@ -17,6 +21,12 @@ public class DailyGoalService {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	private ActivityRepository activityRepository;
+
+	@Autowired
+	EntityDtoConverter entityDtoConverter;
 
 	public List<DailyGoal> findAll() throws Exception {
 		return dailyGoalRepository.findAll();
@@ -44,12 +54,21 @@ public class DailyGoalService {
 		dailyGoalRepository.deleteById(aLong);
 	}
 
-	public DailyGoal createDailyGoal(Long patientId, DailyGoal dailyGoal) {
+	public DailyGoalDtoResponse createDailyGoal(Long patientId, DailyGoalDtoRequest dailyGoalDtoRequest) {
+		var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("patient not found by Id "+patientId));
+		var activity = activityRepository.findById(dailyGoalDtoRequest.getActivityId()).orElseThrow(() -> new RuntimeException("activity not found by Id "+dailyGoalDtoRequest.getActivityId()));
 
-		return patientRepository.findById(patientId).map(
-				patient -> {
-					dailyGoal.setPatient(patient);
-					return dailyGoalRepository.save(dailyGoal);
-				}).orElseThrow(() -> new RuntimeException("patient not found"));
+		var response = dailyGoalRepository.save(new DailyGoal(patient,activity,dailyGoalDtoRequest));
+		return entityDtoConverter.convertDailyGoalToDto(response);
+	}
+
+    public List<DailyGoalDtoResponse> getDailyGoalsByPatientId(Long patientId) {
+		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientId(patientId);
+		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
+    }
+
+	public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndActivityId(Long patientId, Long activityId) {
+		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdAndActivityId(patientId,activityId);
+		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
 	}
 }

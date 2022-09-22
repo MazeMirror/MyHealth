@@ -53,4 +53,12 @@ public class EntityDtoConverter {
 		return specialists.stream().map(this::convertSpecialistToDto).collect(Collectors.toList());
 	}
 
+	public List<DailyGoalDtoResponse> convertDailyGoalsToDto(List<DailyGoal> dailyGoals) {
+		return dailyGoals.stream().map(this::convertDailyGoalToDto).collect(Collectors.toList());
+	}
+
+	public DailyGoalDtoResponse convertDailyGoalToDto(DailyGoal dailyGoal){
+		return modelMapper.map(dailyGoal,DailyGoalDtoResponse.class);
+	}
+
 }
