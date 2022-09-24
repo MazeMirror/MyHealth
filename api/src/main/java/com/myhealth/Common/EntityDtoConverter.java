@@ -61,4 +61,12 @@ public class EntityDtoConverter {
 		return modelMapper.map(dailyGoal,DailyGoalDtoResponse.class);
 	}
 
+	public List<WeeklyGoalDtoResponse> convertWeeklyGoalsToDto(List<WeeklyGoal> weeklyGoals) {
+		return weeklyGoals.stream().map(this::convertWeeklyGoalToDto).collect(Collectors.toList());
+	}
+
+	public WeeklyGoalDtoResponse convertWeeklyGoalToDto(WeeklyGoal weeklyGoal){
+		return modelMapper.map(weeklyGoal,WeeklyGoalDtoResponse.class);
+	}
+
 }

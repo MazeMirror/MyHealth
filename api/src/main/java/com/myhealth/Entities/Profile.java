@@ -39,7 +39,7 @@ public class Profile {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birth_date", nullable = false)
-	Date birthDate;
+	private Date birthDate;
 
 	@Column(name = "image_url", length = 65536)
 	private String imageUrl;

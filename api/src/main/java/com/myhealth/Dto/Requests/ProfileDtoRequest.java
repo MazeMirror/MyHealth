@@ -15,7 +15,7 @@ public class ProfileDtoRequest {
 
 	private String gender;
 
-	Date birthDate;
+	private Date birthDate;
 
 	private String imageUrl;
 

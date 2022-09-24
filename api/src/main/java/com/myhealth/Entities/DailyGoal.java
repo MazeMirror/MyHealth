@@ -1,18 +1,13 @@
 package com.myhealth.Entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -29,6 +24,9 @@ public class DailyGoal {
 	@Column(name = "progress")
 	private double progress;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date", nullable = false)
+	private Date date;
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
@@ -42,5 +40,6 @@ public class DailyGoal {
 		this.activity = activity;
 		this.progress = dailyGoalDtoRequest.getProgress();
 		this.quantity = dailyGoalDtoRequest.getQuantity();
+		this.date = dailyGoalDtoRequest.getDate();
 	}
 }

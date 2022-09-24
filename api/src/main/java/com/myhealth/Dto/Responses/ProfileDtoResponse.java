@@ -17,7 +17,7 @@ public class ProfileDtoResponse {
 
 	private String gender;
 
-	Date birthDate;
+	private Date birthDate;
 
 	private String imageUrl;
 

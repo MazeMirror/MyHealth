@@ -1,5 +1,6 @@
 package com.myhealth.Services;
 
+import java.util.Date;
 import java.util.List;
 
 import com.myhealth.Common.EntityDtoConverter;
@@ -67,8 +68,13 @@ public class DailyGoalService {
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
     }
 
-	public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndActivityId(Long patientId, Long activityId) {
+	/*public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndActivityId(Long patientId, Long activityId) {
 		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdAndActivityId(patientId,activityId);
+		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
+	}*/
+
+	public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndDate(Long patientId, Date date) {
+		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdAndDateEquals(patientId,date);
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
 	}
 }
