@@ -90,4 +90,9 @@ public class ProfileService {
 		return entityDtoConverter.convertProfilesToDto(profilesByRoleId);
 	}
 
+	public List<ProfileDtoResponse> getProfilesRoleId(long roleId) {
+		List<Profile> profilesByRole = profileRepository.findProfilesByRoleId(roleId);
+		//Then
+		return entityDtoConverter.convertProfilesToDto(profilesByRole);
+	}
 }

@@ -44,6 +44,12 @@ public class ProfileController {
 		return new ResponseEntity<>(profiles, HttpStatus.OK);
 	}
 
+	@GetMapping("/")
+	public ResponseEntity<List<ProfileDtoResponse>> getProfilesByRoleId(@RequestParam long roleId) throws RuntimeException {
+		List<ProfileDtoResponse> profiles = profileService.getProfilesRoleId(roleId);
+		return new ResponseEntity<>(profiles, HttpStatus.OK);
+	}
+
 	@PutMapping("{id}")
 	public ResponseEntity<ProfileDtoResponse> putProfile(@PathVariable Long id,@RequestBody ProfileDtoRequest profileDtoRequest) throws RuntimeException {
 		ProfileDtoResponse profile = profileService.put(id,profileDtoRequest);
