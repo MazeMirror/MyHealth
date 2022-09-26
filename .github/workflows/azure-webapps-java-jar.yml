@@ -25,4 +25,4 @@ jobs:
     - name: deploy to Azure Spring Apps using Maven
       run: |
         cd api
-        mvn package com.microsoft.azure:azure-webapp-maven-plugin:2.6.1:deploy
+        mvn azure-spring-apps:deploy
