@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/dailyGoal")
+@RequestMapping("/dailyGoalo")
 public class DailyGoalController {
 
 	@Autowired
