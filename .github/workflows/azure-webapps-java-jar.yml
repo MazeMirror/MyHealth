@@ -1,7 +1,7 @@
 name: AzureSpringCloud
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "test-deploy" ]
 
 jobs:
   build-and-deploy:
