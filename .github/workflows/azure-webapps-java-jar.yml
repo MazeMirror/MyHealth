@@ -1,28 +1,25 @@
-name: AzureSpringCloud
+name: Azure App Services CI
+
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-
-    - uses: actions/checkout@main
-
-    - name: Set up JDK 1.17
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.17
-
-    # Maven plugin can cosume this authentication method automatically
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    # Maven deploy, make sure you have correct configurations in your pom.xml
-    - name: deploy to Azure Spring Apps using Maven
-      run: |
-        cd api
-        mvn package com.microsoft.azure:azure-spring-apps-maven-plugin:deploy
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Build with Maven
+        run: |
+            cd api
+            mvn clean package
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: myhealthnewapi
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
+          package: '${{ github.workspace }}/api/target/*.jar'
