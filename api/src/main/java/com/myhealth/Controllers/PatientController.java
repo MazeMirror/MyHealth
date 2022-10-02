@@ -83,6 +83,15 @@ public class PatientController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(dailyGoalDto);
 	}
 
+	@PutMapping(path = "{patientId}/dailyGoal/{dailyGoalId}")
+	public ResponseEntity<DailyGoalDtoResponse> updateDailyGoal(@PathVariable("patientId") Long patientId,
+																@PathVariable("dailyGoalId") Long dailyGoalId,
+																@RequestBody DailyGoalDtoRequest dailyGoal) {
+
+		DailyGoalDtoResponse dailyGoalDto = dailyGoalService.updateDailyGoalByPatientIdAndId(patientId, dailyGoalId,dailyGoal);
+		return new ResponseEntity<>(dailyGoalDto, HttpStatus.OK);
+	}
+
 	/*@GetMapping(path = "{patientId}/dailyGoals")
 	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "activityId",required = false) Long activityId) {
 
