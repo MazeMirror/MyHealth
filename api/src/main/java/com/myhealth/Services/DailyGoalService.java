@@ -64,7 +64,7 @@ public class DailyGoalService {
 	}
 
     public List<DailyGoalDtoResponse> getDailyGoalsByPatientId(Long patientId) {
-		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientId(patientId);
+		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdOrderByQuantityAsc(patientId);
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
     }
 
@@ -74,7 +74,8 @@ public class DailyGoalService {
 	}*/
 
 	public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndDate(Long patientId, Date date) {
-		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdAndDateEquals(patientId,date);
+		List<DailyGoal> dailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdAndDateEqualsOrderByQuantityAsc(patientId,date);
+
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
 	}
 
