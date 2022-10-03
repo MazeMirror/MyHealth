@@ -38,6 +38,7 @@ public class Specialist {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "specialists_patients", joinColumns = {
 			@JoinColumn(name = "specialist_id") }, inverseJoinColumns = { @JoinColumn(name = "patient_id") })
+	@JsonIgnore
 	private List<Patient> patients;
 
 	@Column(name = "specialty", length = 64, nullable = false)

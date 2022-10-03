@@ -2,6 +2,7 @@ package com.myhealth.Entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import lombok.Data;
@@ -29,10 +30,12 @@ public class DailyGoal {
 	private Date date;
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
+	@JsonIgnore
 	private Patient patient;
 
 	@ManyToOne
 	@JoinColumn(name = "activity_id", nullable = false)
+	@JsonIgnore
 	private Activity activity;
 
 	public DailyGoal(Patient patient, Activity activity,DailyGoalDtoRequest dailyGoalDtoRequest) {

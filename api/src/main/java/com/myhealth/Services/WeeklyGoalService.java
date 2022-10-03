@@ -1,5 +1,9 @@
 package com.myhealth.Services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.myhealth.Common.EntityDtoConverter;
@@ -67,10 +71,10 @@ public class WeeklyGoalService {
 		return entityDtoConverter.convertWeeklyGoalsToDto(weeklyGoals);
 	}
 
-	public List<WeeklyGoalDtoResponse> getWeeklyGoalsByPatientIdAndActivityId(Long patientId, Long activityId) {
+	/*public List<WeeklyGoalDtoResponse> getWeeklyGoalsByPatientIdAndActivityId(Long patientId, Long activityId) {
 		List<WeeklyGoal> weeklyGoals = weeklyGoalRepository.getWeeklyGoalsByPatientIdAndActivityId(patientId,activityId);
 		return entityDtoConverter.convertWeeklyGoalsToDto(weeklyGoals);
-	}
+	}*/
 
 	public WeeklyGoalDtoResponse createWeeklyGoal(Long patientId, WeeklyGoalDtoRequest weeklyGoalDtoRequest) {
 		var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("patient not found by Id "+patientId));
@@ -79,4 +83,15 @@ public class WeeklyGoalService {
 		var response = weeklyGoalRepository.save(new WeeklyGoal(patient,activity,weeklyGoalDtoRequest));
 		return entityDtoConverter.convertWeeklyGoalToDto(response);
 	}
+
+    public List<WeeklyGoalDtoResponse> getWeeklyGoalByPatientIdAndFilteredByDates(Long patientId, Date startDate, Date endDate) {
+		List<WeeklyGoal> tempWeeklyGoals = weeklyGoalRepository.getWeeklyGoalsByPatientIdOrderByQuantity(patientId);
+
+		var filteredWg = tempWeeklyGoals.stream().filter(
+				weeklyGoal -> (weeklyGoal.getStartDate().after(startDate) || weeklyGoal.getStartDate().equals(startDate))
+								&& (weeklyGoal.getEndDate().before(endDate) || weeklyGoal.getEndDate().equals(endDate))
+		).toList();
+
+		return entityDtoConverter.convertWeeklyGoalsToDto(filteredWg);
+    }
 }

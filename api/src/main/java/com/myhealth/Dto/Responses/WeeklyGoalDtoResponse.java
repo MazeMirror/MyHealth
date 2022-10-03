@@ -15,4 +15,7 @@ public class WeeklyGoalDtoResponse {
     private Long patientId;
 
     private Long activityId;
+
+    private Date startDate;
+    private Date endDate;
 }

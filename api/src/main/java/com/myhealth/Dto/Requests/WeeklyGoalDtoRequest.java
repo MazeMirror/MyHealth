@@ -11,4 +11,7 @@ public class WeeklyGoalDtoRequest {
     private Double progress;
 
     private Long activityId;
+
+    private Date startDate;
+    private Date endDate;
 }

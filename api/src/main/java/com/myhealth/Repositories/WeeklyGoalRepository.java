@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface WeeklyGoalRepository extends JpaRepository<WeeklyGoal,Long> {
     List<WeeklyGoal> getWeeklyGoalsByPatientId(long patientId);
-    List<WeeklyGoal> getWeeklyGoalsByPatientIdAndActivityId(long patientId,long activityId);
+    List<WeeklyGoal> getWeeklyGoalsByPatientIdOrderByQuantity(long patientId);
 }

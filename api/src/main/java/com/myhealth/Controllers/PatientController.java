@@ -125,7 +125,7 @@ public class PatientController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(weeklyGoalDto);
 	}
 
-	@GetMapping(path = "{patientId}/weeklyGoals")
+	/*@GetMapping(path = "{patientId}/weeklyGoals")
 	public ResponseEntity<List<WeeklyGoalDtoResponse>> getWeeklyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "activityId",required = false) Long activityId) {
 
 		List<WeeklyGoalDtoResponse> weeklyGoals;
@@ -135,6 +135,20 @@ public class PatientController {
 		else{
 			weeklyGoals = weeklyGoalService.getWeeklyGoalsByPatientIdAndActivityId(patientId,activityId);
 		}
+		return new ResponseEntity<>(weeklyGoals, HttpStatus.OK);
+	}*/
+
+	@GetMapping(path = "{patientId}/weeklyGoals")
+	public ResponseEntity<List<WeeklyGoalDtoResponse>> getWeeklyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate ) {
+
+		List<WeeklyGoalDtoResponse> weeklyGoals;
+		weeklyGoals = weeklyGoalService.getWeeklyGoalByPatientIdAndFilteredByDates(patientId, startDate,endDate);
+		/*if(activityId == null){
+			weeklyGoals = weeklyGoalService.getWeeklyGoalByPatientId(patientId);
+		}
+		else{
+			weeklyGoals = weeklyGoalService.getWeeklyGoalsByPatientIdAndActivityId(patientId,activityId);
+		}*/
 		return new ResponseEntity<>(weeklyGoals, HttpStatus.OK);
 	}
 }

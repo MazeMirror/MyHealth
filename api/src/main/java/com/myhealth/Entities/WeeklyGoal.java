@@ -2,6 +2,7 @@ package com.myhealth.Entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Requests.WeeklyGoalDtoRequest;
 import lombok.Data;
@@ -25,12 +26,22 @@ public class WeeklyGoal {
 	@Column(name = "progress")
 	private double progress;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "startDate", nullable = false)
+	private Date startDate;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "endDate", nullable = false)
+	private Date endDate;
+
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
+	@JsonIgnore
 	private Patient patient;
 
 	@ManyToOne
 	@JoinColumn(name = "activity_id", nullable = false)
+	@JsonIgnore
 	private Activity activity;
 
 	public WeeklyGoal(Patient patient, Activity activity, WeeklyGoalDtoRequest weeklyGoalDtoRequest) {
@@ -38,5 +49,7 @@ public class WeeklyGoal {
 		this.activity = activity;
 		this.progress = weeklyGoalDtoRequest.getProgress();
 		this.quantity = weeklyGoalDtoRequest.getQuantity();
+		this.startDate = weeklyGoalDtoRequest.getStartDate();
+		this.endDate = weeklyGoalDtoRequest.getEndDate();
 	}
 }
