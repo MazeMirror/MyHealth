@@ -92,6 +92,13 @@ public class PatientController {
 		return new ResponseEntity<>(dailyGoalDto, HttpStatus.OK);
 	}
 
+	//Actulizar weeklyGoal
+	//TODO:
+	//Eliminar dailyGoal
+	//TODO:
+	//Eliminar weeklyGoal
+	//TODO:
+
 	/*@GetMapping(path = "{patientId}/dailyGoals")
 	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "activityId",required = false) Long activityId) {
 
