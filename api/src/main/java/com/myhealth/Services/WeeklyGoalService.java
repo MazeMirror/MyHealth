@@ -94,4 +94,18 @@ public class WeeklyGoalService {
 
 		return entityDtoConverter.convertWeeklyGoalsToDto(filteredWg);
     }
+
+	public WeeklyGoalDtoResponse updateWeeklyGoalByPatientIdAndId(Long patientId, Long weeklyGoalId, WeeklyGoalDtoRequest weeklyGoalDtoRequest) {
+		var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("patient not found by Id "+patientId));
+		var activity = activityRepository.findById(weeklyGoalDtoRequest.getActivityId()).orElseThrow(() -> new RuntimeException("activity not found by Id "+weeklyGoalDtoRequest.getActivityId()));
+		var weeklyGoal = weeklyGoalRepository.findById(weeklyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+weeklyGoalId));
+
+		weeklyGoal.setQuantity(weeklyGoalDtoRequest.getQuantity());
+		weeklyGoal.setProgress(weeklyGoalDtoRequest.getProgress());
+		weeklyGoal.setStartDate(weeklyGoalDtoRequest.getStartDate());
+		weeklyGoal.setEndDate(weeklyGoalDtoRequest.getEndDate());
+
+		var response = weeklyGoalRepository.save(weeklyGoal);
+		return entityDtoConverter.convertWeeklyGoalToDto(response);
+	}
 }
