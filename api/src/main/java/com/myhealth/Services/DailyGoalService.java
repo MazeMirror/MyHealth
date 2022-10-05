@@ -91,4 +91,8 @@ public class DailyGoalService {
 		var response = dailyGoalRepository.save(dailyGoal);
 		return entityDtoConverter.convertDailyGoalToDto(response);
 	}
+
+	/*public void DailyGoalDtoResponse deleteDailyGoalByPatientId(Long patientId, Long dailyGoalId) throws Exception {
+
+	}*/
 }

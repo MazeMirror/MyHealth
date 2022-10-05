@@ -93,11 +93,25 @@ public class PatientController {
 	}
 
 	//Actulizar weeklyGoal
-	//TODO:
+	@PutMapping(path = "{patientId}/weeklyGoalId/{weeklyGoalId}")
+	public ResponseEntity<WeeklyGoalDtoResponse> updateWeeklyGoal(@PathVariable("patientId") Long patientId,
+																@PathVariable("weeklyGoalId") Long weeklyGoalId,
+																@RequestBody WeeklyGoalDtoRequest weeklyGoal) {
+
+		WeeklyGoalDtoResponse weeklyGoalDto = weeklyGoalService.updateWeeklyGoalByPatientIdAndId(patientId, weeklyGoalId,weeklyGoal);
+		return new ResponseEntity<>(weeklyGoalDto, HttpStatus.OK);
+	}
+
 	//Eliminar dailyGoal
-	//TODO:
+	@DeleteMapping(path="{patientId}/dailyGoalId/{dailyGoalId}")
+	public void deleteDailyGoal(@PathVariable("dailyGoalId") Long dailyGoalId) throws Exception{
+		dailyGoalService.deleteById(dailyGoalId);
+	}
 	//Eliminar weeklyGoal
-	//TODO:
+	@DeleteMapping(path="{patientId}/weeklyGoalId/{weeklyGoalId}")
+	public void deleteWeeklyGoal(@PathVariable("weeklyGoalId") Long weeklyGoalId) throws Exception{
+		weeklyGoalService.deleteById(weeklyGoalId);
+	}
 
 	/*@GetMapping(path = "{patientId}/dailyGoals")
 	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "activityId",required = false) Long activityId) {
