@@ -69,4 +69,12 @@ public class EntityDtoConverter {
 		return modelMapper.map(weeklyGoal,WeeklyGoalDtoResponse.class);
 	}
 
+	public List<MealPlanDtoResponse> convertMealPlanToDto(List<MealPlan> mealPlans) {
+		return mealPlans.stream().map(this::convertMealPlanToDto).collect(Collectors.toList());
+	}
+
+	public MealPlanDtoResponse convertMealPlanToDto(MealPlan mealPlan){
+		return modelMapper.map(mealPlan,MealPlanDtoResponse.class);
+	}
+
 }

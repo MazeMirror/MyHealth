@@ -2,6 +2,9 @@ package com.myhealth.Services;
 
 import java.util.List;
 
+import com.myhealth.Common.EntityDtoConverter;
+import com.myhealth.Dto.Responses.MealPlanDtoResponse;
+import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.MealPlan;
 import com.myhealth.Repositories.MealPlanRepository;
 import com.myhealth.Repositories.PatientRepository;
@@ -16,6 +19,9 @@ public class MealPlanService {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	EntityDtoConverter entityDtoConverter;
 
 	public List<MealPlan> findAll() throws Exception {
 		return mealPlanRepository.findAll();
@@ -51,5 +57,11 @@ public class MealPlanService {
 				}).orElseThrow(() -> new RuntimeException("patient not found"));
 
 		// return mealPlanRepository.save(mealPlan);
+	}
+
+	public List<MealPlanDtoResponse> getMealPlansByPatientId(Long patientId){
+
+		List<MealPlan> mealPlans = mealPlanRepository.getMealPlansByPatientId(patientId);
+		return entityDtoConverter.convertMealPlanToDto(mealPlans);
 	}
 }
