@@ -7,10 +7,7 @@ import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Requests.PatientDtoRequest;
 import com.myhealth.Dto.Requests.SpecialistDtoRequest;
 import com.myhealth.Dto.Requests.WeeklyGoalDtoRequest;
-import com.myhealth.Dto.Responses.DailyGoalDtoResponse;
-import com.myhealth.Dto.Responses.PatientDtoResponse;
-import com.myhealth.Dto.Responses.SpecialistDtoResponse;
-import com.myhealth.Dto.Responses.WeeklyGoalDtoResponse;
+import com.myhealth.Dto.Responses.*;
 import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.MealPlan;
 import com.myhealth.Entities.Patient;
@@ -171,5 +168,14 @@ public class PatientController {
 			weeklyGoals = weeklyGoalService.getWeeklyGoalsByPatientIdAndActivityId(patientId,activityId);
 		}*/
 		return new ResponseEntity<>(weeklyGoals, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "{patientId}/mealPlans")
+	public ResponseEntity<List<MealPlanDtoResponse>> getMealPlansByPatiendId(@PathVariable("patientId") Long patientId){
+
+		List<MealPlanDtoResponse> mealPlans;
+		mealPlans = mealPlanService.getMealPlansByPatientId(patientId);
+
+		return new ResponseEntity<>(mealPlans, HttpStatus.OK);
 	}
 }
