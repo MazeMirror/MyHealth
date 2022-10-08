@@ -3,10 +3,7 @@ package com.myhealth.Controllers;
 import java.util.Date;
 import java.util.List;
 
-import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
-import com.myhealth.Dto.Requests.PatientDtoRequest;
-import com.myhealth.Dto.Requests.SpecialistDtoRequest;
-import com.myhealth.Dto.Requests.WeeklyGoalDtoRequest;
+import com.myhealth.Dto.Requests.*;
 import com.myhealth.Dto.Responses.*;
 import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.MealPlan;
@@ -170,6 +167,7 @@ public class PatientController {
 		return new ResponseEntity<>(weeklyGoals, HttpStatus.OK);
 	}
 
+	//Obtener los MealPlan
 	@GetMapping(path = "{patientId}/mealPlans")
 	public ResponseEntity<List<MealPlanDtoResponse>> getMealPlansByPatiendId(@PathVariable("patientId") Long patientId){
 
@@ -177,5 +175,21 @@ public class PatientController {
 		mealPlans = mealPlanService.getMealPlansByPatientId(patientId);
 
 		return new ResponseEntity<>(mealPlans, HttpStatus.OK);
+	}
+
+	//Actualizar MealPlan
+	@PutMapping(path = "{patientId}/mealPlans/{mealPlanId}")
+	public ResponseEntity<MealPlanDtoResponse> updateMealPlan(@PathVariable("patientId") Long patientId,
+															  @PathVariable("mealPlanId") Long mealPlanId,
+															  @RequestBody MealPlanDtoRequest mealPlan){
+
+		MealPlanDtoResponse mealPlanDto = mealPlanService.updateMealPlanByPatientIdAndId(patientId, mealPlanId, mealPlan);
+		return new ResponseEntity<>(mealPlanDto, HttpStatus.OK);
+	}
+
+	//Eliminar mealPlan
+	@DeleteMapping(path="{patientId}/mealPlans/{mealPlanId}")
+	public void deleteMealPlan(@PathVariable("mealPlanId") Long mealPlanId) throws Exception{
+		mealPlanService.deleteById(mealPlanId);
 	}
 }
