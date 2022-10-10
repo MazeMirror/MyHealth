@@ -119,7 +119,7 @@ public class PatientController {
 		}
 		return new ResponseEntity<>(dailyGoals, HttpStatus.OK);
 	}*/
-	@GetMapping(path = "{patientId}/dailyGoals")
+	@GetMapping(path = "{patientId}/dailyGoals",params = {"date"})
 	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientId(@PathVariable("patientId") Long patientId, @RequestParam(value = "date",required = false) Date date) {
 
 		List<DailyGoalDtoResponse> dailyGoals;
@@ -132,7 +132,7 @@ public class PatientController {
 		return new ResponseEntity<>(dailyGoals, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "{patientId}/dailyGoals?")
+	@GetMapping(path = "{patientId}/dailyGoals/filter",params = {"startDate","endDate"})
 	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientIdAndDates(@PathVariable("patientId") Long patientId,
 																					   @RequestParam(value = "startDate") Date startDate,
 																					   @RequestParam(value = "endDate") Date endDate)
