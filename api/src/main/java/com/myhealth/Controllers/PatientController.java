@@ -132,6 +132,17 @@ public class PatientController {
 		return new ResponseEntity<>(dailyGoals, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "{patientId}/dailyGoals?")
+	public ResponseEntity<List<DailyGoalDtoResponse>> getDailyGoalsByPatientIdAndDates(@PathVariable("patientId") Long patientId,
+																					   @RequestParam(value = "startDate") Date startDate,
+																					   @RequestParam(value = "endDate") Date endDate)
+	{
+
+		List<DailyGoalDtoResponse> dailyGoals = dailyGoalService.getDailyGoalsByPatientIdAndFilteredByDates(patientId,startDate,endDate);
+
+		return new ResponseEntity<>(dailyGoals, HttpStatus.OK);
+	}
+
 	@PostMapping(path = "{patientId}/weeklyGoal")
 	public ResponseEntity<WeeklyGoalDtoResponse> createWeeklyGoal(@PathVariable("patientId") Long patientId,
 																  @RequestBody WeeklyGoalDtoRequest weeklyGoalDtoRequest) {

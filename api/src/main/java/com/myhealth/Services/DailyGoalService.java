@@ -7,12 +7,15 @@ import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.DailyGoalDtoRequest;
 import com.myhealth.Dto.Responses.DailyGoalDtoResponse;
 import com.myhealth.Entities.DailyGoal;
+import com.myhealth.Entities.WeeklyGoal;
 import com.myhealth.Repositories.ActivityRepository;
 import com.myhealth.Repositories.DailyGoalRepository;
 import com.myhealth.Repositories.PatientRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class DailyGoalService {
@@ -91,6 +94,17 @@ public class DailyGoalService {
 		var response = dailyGoalRepository.save(dailyGoal);
 		return entityDtoConverter.convertDailyGoalToDto(response);
 	}
+
+    public List<DailyGoalDtoResponse> getDailyGoalsByPatientIdAndFilteredByDates(Long patientId, Date startDate, Date endDate) {
+		List<DailyGoal> tempDailyGoals = dailyGoalRepository.getDailyGoalsByPatientIdOrderByQuantityAsc(patientId);
+
+		var filteredDg = tempDailyGoals.stream().filter(
+				dailyGoal -> ( (dailyGoal.getDate().after(startDate) || (dailyGoal.getDate().equals(startDate))) &&
+						(dailyGoal.getDate().before(endDate ) || dailyGoal.getDate().equals(endDate)) )
+		).toList();
+
+		return entityDtoConverter.convertDailyGoalsToDto(filteredDg);
+    }
 
 	/*public void DailyGoalDtoResponse deleteDailyGoalByPatientId(Long patientId, Long dailyGoalId) throws Exception {
 
