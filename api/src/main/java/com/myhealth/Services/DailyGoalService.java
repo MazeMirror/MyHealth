@@ -82,6 +82,17 @@ public class DailyGoalService {
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
 	}
 
+	public DailyGoalDtoResponse updateDailyGoalByPatientIdAndId(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
+		var dailyGoal = dailyGoalRepository.findById(dailyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+dailyGoalId));
+
+		dailyGoal.setQuantity(dailyGoalDtoRequest.getQuantity());
+		dailyGoal.setProgress(dailyGoalDtoRequest.getProgress());
+		dailyGoal.setDate(dailyGoalDtoRequest.getDate());
+
+		var response = dailyGoalRepository.save(dailyGoal);
+		return entityDtoConverter.convertDailyGoalToDto(response);
+	}
+
     public DailyGoalDtoResponse updateDailyGoalByPatientIdAndIdOfSteps(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
 		var dailyGoal = dailyGoalRepository.findById(dailyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+dailyGoalId));
 
