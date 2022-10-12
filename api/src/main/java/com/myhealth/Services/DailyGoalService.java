@@ -82,9 +82,29 @@ public class DailyGoalService {
 		return entityDtoConverter.convertDailyGoalsToDto(dailyGoals);
 	}
 
-    public DailyGoalDtoResponse updateDailyGoalByPatientIdAndId(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
-		var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("patient not found by Id "+patientId));
-		var activity = activityRepository.findById(dailyGoalDtoRequest.getActivityId()).orElseThrow(() -> new RuntimeException("activity not found by Id "+dailyGoalDtoRequest.getActivityId()));
+    public DailyGoalDtoResponse updateDailyGoalByPatientIdAndIdOfSteps(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
+		var dailyGoal = dailyGoalRepository.findById(dailyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+dailyGoalId));
+
+		dailyGoal.setQuantity(dailyGoalDtoRequest.getQuantity());
+		dailyGoal.setProgress(dailyGoalDtoRequest.getProgress());
+		dailyGoal.setDate(dailyGoalDtoRequest.getDate());
+
+		var response = dailyGoalRepository.save(dailyGoal);
+		return entityDtoConverter.convertDailyGoalToDto(response);
+	}
+
+	public DailyGoalDtoResponse updateDailyGoalByPatientIdAndIdOfDistance(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
+		var dailyGoal = dailyGoalRepository.findById(dailyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+dailyGoalId));
+
+		dailyGoal.setQuantity(dailyGoalDtoRequest.getQuantity());
+		dailyGoal.setProgress(dailyGoalDtoRequest.getProgress());
+		dailyGoal.setDate(dailyGoalDtoRequest.getDate());
+
+		var response = dailyGoalRepository.save(dailyGoal);
+		return entityDtoConverter.convertDailyGoalToDto(response);
+	}
+
+	public DailyGoalDtoResponse updateDailyGoalByPatientIdAndIdOfKilocalorie(Long patientId, Long dailyGoalId, DailyGoalDtoRequest dailyGoalDtoRequest) {
 		var dailyGoal = dailyGoalRepository.findById(dailyGoalId).orElseThrow(() -> new RuntimeException("dailyGoal not found by Id "+dailyGoalId));
 
 		dailyGoal.setQuantity(dailyGoalDtoRequest.getQuantity());
