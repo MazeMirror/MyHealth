@@ -77,4 +77,30 @@ public class EntityDtoConverter {
 		return modelMapper.map(mealPlan,MealPlanDtoResponse.class);
 	}
 
+	//Distancias
+	public DistanceDtoResponse convertDistanceToDto(Distance distance){
+		return modelMapper.map(distance,DistanceDtoResponse.class);
+	}
+
+	public List<DistanceDtoResponse> convertDistancesToDto(List<Distance> distances){
+		return distances.stream().map(this::convertDistanceToDto).collect(Collectors.toList());
+	}
+
+	//Pasos
+	public StepDtoResponse convertStepToDto(Step step){
+		return modelMapper.map(step,StepDtoResponse.class);
+	}
+
+	public List<StepDtoResponse> convertStepsToDto(List<Step> steps){
+		return steps.stream().map(this::convertStepToDto).collect(Collectors.toList());
+	}
+
+	//Kilocalorias
+	public KilocalorieDtoResponse convertKilocalorieToDto(Kilocalorie kilocalorie){
+		return modelMapper.map(kilocalorie,KilocalorieDtoResponse.class);
+	}
+
+	public List<KilocalorieDtoResponse> convertKilocaloriesToDto(List<Kilocalorie> kilocalories){
+		return kilocalories.stream().map(this::convertKilocalorieToDto).collect(Collectors.toList());
+	}
 }

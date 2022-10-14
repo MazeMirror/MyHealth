@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "step")
 @NoArgsConstructor
-public class Steps {
+public class Step {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "quantity")
-	private String quantity;
+	private Double quantity;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date")

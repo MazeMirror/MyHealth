@@ -27,7 +27,7 @@ public class Distance {
 	private Long id;
 
 	@Column(name = "quantity")
-	private Long quantity;
+	private Double quantity;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date")

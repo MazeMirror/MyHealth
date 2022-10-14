@@ -18,16 +18,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "walk")
+@Table(name = "kilocalorie")
 @NoArgsConstructor
-public class Walk {
+public class Kilocalorie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "distance")
-	private Long distance;
+	@Column(name = "quantity")
+	private Double quantity;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date")
