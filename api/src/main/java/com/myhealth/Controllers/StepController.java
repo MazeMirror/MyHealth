@@ -54,7 +54,11 @@ public class StepController {
         return ResponseEntity.ok(stepDtoResponse);
     }
 
-
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> DeleteStep(@PathVariable("id") Long id) throws Exception {
+        stepService.deleteById(id);
+        return new ResponseEntity<>("Deleted step" + id, HttpStatus.OK);
+    }
 
 
 
