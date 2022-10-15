@@ -89,7 +89,7 @@ public class DistanceService {
         return entityDtoConverter.convertDistanceToDto(response);
     }
 
-    public DistanceDtoResponse updateByIdAndPatientId(Long id, Long patientId,DistanceDtoRequest distanceDtoRequest) throws Exception {
+    public DistanceDtoResponse updateByIdAndPatientId(Long id, Long patientId,DistanceDtoRequest distanceDtoRequest)  {
         var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("distance not found by Id"));
 
         Distance distance = distanceRepository.findById(id).orElseThrow(() -> new RuntimeException("distance not found by Id"));

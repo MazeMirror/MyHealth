@@ -64,12 +64,12 @@ public class KilocalorieService {
 
 
 
-    public KilocalorieDtoResponse createKilocalorie(Long patientId, DistanceDtoRequest distanceDtoRequest) {
+    public KilocalorieDtoResponse createKilocalorie(Long patientId, KilocalorieDtoRequest kilocalorieDtoRequest) {
         var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("patient not found by Id "+patientId));
 
         var kilocalorieEntity = new Kilocalorie();
-        kilocalorieEntity.setDate(distanceDtoRequest.getDate());
-        kilocalorieEntity.setQuantity(distanceDtoRequest.getQuantity());
+        kilocalorieEntity.setDate(kilocalorieDtoRequest.getDate());
+        kilocalorieEntity.setQuantity(kilocalorieDtoRequest.getQuantity());
         kilocalorieEntity.setPatient(patient);
 
         var response = kilocalorieRepository.save(kilocalorieEntity);
@@ -78,18 +78,18 @@ public class KilocalorieService {
         return entityDtoConverter.convertKilocalorieToDto(response);
     }
 
-    public KilocalorieDtoResponse update(Long id, DistanceDtoRequest distanceDtoRequest) throws Exception {
+    public KilocalorieDtoResponse update(Long id, KilocalorieDtoRequest kilocalorieDtoRequest) throws Exception {
         Kilocalorie kilocalorie = kilocalorieRepository.findById(id).orElseThrow(() -> new RuntimeException("kilocalorie not found"));
 
-        kilocalorie.setQuantity(distanceDtoRequest.getQuantity());
-        kilocalorie.setDate(distanceDtoRequest.getDate());
+        kilocalorie.setQuantity(kilocalorieDtoRequest.getQuantity());
+        kilocalorie.setDate(kilocalorieDtoRequest.getDate());
 
         var response = kilocalorieRepository.save(kilocalorie);
 
         return entityDtoConverter.convertKilocalorieToDto(response);
     }
 
-    public KilocalorieDtoResponse updateByIdAndPatientId(Long id, Long patientId, KilocalorieDtoRequest kilocalorieDtoRequest) throws Exception {
+    public KilocalorieDtoResponse updateByIdAndPatientId(Long id, Long patientId, KilocalorieDtoRequest kilocalorieDtoRequest) {
         var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("kilocalorie not found by Id"));
 
         Kilocalorie kilocalorie = kilocalorieRepository.findById(id).orElseThrow(() -> new RuntimeException("kilocalorie not found by Id"));
