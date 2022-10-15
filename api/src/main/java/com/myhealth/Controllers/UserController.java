@@ -62,4 +62,9 @@ public class UserController {
 		UserDtoResponse user = userService.postUser(userDtoRequest);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+
+	@DeleteMapping(path = "{userId}")
+	public void deleteUser(@PathVariable("userId") Long userId) throws Exception {
+		userService.deleteById(userId);
+	}
 }

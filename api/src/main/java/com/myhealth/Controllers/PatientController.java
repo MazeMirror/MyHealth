@@ -192,4 +192,9 @@ public class PatientController {
 	public void deleteMealPlan(@PathVariable("mealPlanId") Long mealPlanId) throws Exception{
 		mealPlanService.deleteById(mealPlanId);
 	}
+
+	@DeleteMapping(path="{patientId}")
+	public void deletePatient(@PathVariable("patientId") Long patientId) throws Exception{
+		patientService.deleteById(patientId);
+	}
 }
