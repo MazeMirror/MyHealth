@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.myhealth.Dto.Requests.PatientDtoRequest;
 import com.myhealth.Dto.Responses.PatientDtoResponse;
+import com.myhealth.Dto.Responses.SpecialistDtoResponse;
 import com.myhealth.Entities.Patient;
 import com.myhealth.Entities.User;
 import com.myhealth.Repositories.PatientRepository;
@@ -64,4 +65,10 @@ public class PatientService {
 				.orElseThrow(() -> new RuntimeException("user not found"));
 		patientRepository.deleteById(aLong);
 	}
+
+    public List<SpecialistDtoResponse> getAllSpecialistsByPatientId(Long patientId) {
+
+		var patient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("Patient not found"));
+		return patient.getSpecialistsPatients().stream().map(specialist -> entityDtoConverter.convertSpecialistToDto(specialist)).toList();
+    }
 }

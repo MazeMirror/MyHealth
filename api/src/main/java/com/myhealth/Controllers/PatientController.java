@@ -233,6 +233,16 @@ public class PatientController {
 		return new ResponseEntity<>(mealPlanDto, HttpStatus.OK);
 	}
 
+	@GetMapping("/{patientId}/specialists")
+	public ResponseEntity<List<SpecialistDtoResponse>> getAllSpecialistsByPatientId(@PathVariable Long patientId) {
+		try {
+			List<SpecialistDtoResponse> specialists = patientService.getAllSpecialistsByPatientId(patientId);
+			return new ResponseEntity<>(specialists, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	//Eliminar mealPlan
 	@DeleteMapping(path="{patientId}/mealPlans/{mealPlanId}")
 	public void deleteMealPlan(@PathVariable("mealPlanId") Long mealPlanId) throws Exception{
