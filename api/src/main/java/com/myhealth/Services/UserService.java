@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import com.myhealth.Common.EntityDtoConverter;
 import com.myhealth.Dto.Requests.UserDtoRequest;
 import com.myhealth.Dto.Responses.UserDtoResponse;
+import com.myhealth.Entities.DailyGoal;
 import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.User;
 import com.myhealth.Repositories.ProfileRepository;
@@ -61,4 +62,10 @@ public class UserService {
 
 		return entityDtoConverter.convertUserToDto(dto);
     }
+
+	public void deleteById(Long aLong) throws Exception {
+		User user = userRepository.findById(aLong)
+				.orElseThrow(() -> new RuntimeException("user not found"));
+		userRepository.deleteById(aLong);
+	}
 }
