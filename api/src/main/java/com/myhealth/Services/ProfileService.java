@@ -56,7 +56,7 @@ public class ProfileService {
 
 	public Boolean deleteProfile(Long id) {
 		if (profileRepository.existsById(id)) {
-			roleRepository.deleteById(id);
+			profileRepository.deleteById(id);
 			return true;
 		} else {
 			return false;
