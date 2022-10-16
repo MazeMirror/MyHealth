@@ -10,6 +10,7 @@ import com.myhealth.Dto.Responses.ProfileDtoResponse;
 import com.myhealth.Entities.Profile;
 import com.myhealth.Entities.Role;
 import com.myhealth.Entities.User;
+import com.myhealth.Repositories.PatientRepository;
 import com.myhealth.Repositories.ProfileRepository;
 import com.myhealth.Repositories.RoleRepository;
 import com.myhealth.Repositories.UserRepository;
@@ -29,6 +30,9 @@ public class ProfileService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private PatientRepository patientRepository;
 
 	@Autowired
 	private EntityDtoConverter entityDtoConverter;
@@ -84,10 +88,10 @@ public class ProfileService {
     }
 
 	public List<ProfileDtoResponse> getProfilesByNameAndRoleId(String name, long roleId) {
-		List<Profile> profilesByName = profileRepository.findProfileByNameContaining(name);
+		List<Profile> profilesByNameAndRoleId = profileRepository.findProfileByNameContainingAndRoleId(name,roleId);
 		//Then
-		var profilesByRoleId = profilesByName.stream().filter(profile -> profile.getRole().getId() == roleId).toList();
-		return entityDtoConverter.convertProfilesToDto(profilesByRoleId);
+		//var profilesByRoleId = profilesByName.stream().filter(profile -> profile.getRole().getId() == roleId).toList();
+		return entityDtoConverter.convertProfilesToDto(profilesByNameAndRoleId);
 	}
 
 	public List<ProfileDtoResponse> getProfilesRoleId(long roleId) {
@@ -95,4 +99,29 @@ public class ProfileService {
 		//Then
 		return entityDtoConverter.convertProfilesToDto(profilesByRole);
 	}
+
+    public List<ProfileDtoResponse> getProfilesByNameAndRoleIdAndSpecialistId(String name, long roleId, long specialistId) {
+		List<Profile> profilesByNameAndRoleId = profileRepository.findProfileByNameContainingAndRoleId(name,roleId);
+
+		var profilesBySpecialistId = profilesByNameAndRoleId.stream().filter(profile -> {
+			var patient = patientRepository.findByProfileId(profile.getId());
+
+			if(patient.isPresent()){
+				var specialistList = patient.get().getSpecialistsPatients();
+
+				var existSpecialist = specialistList.stream().filter(specialist -> specialist.getId() == specialistId).toList();
+
+				if(existSpecialist.isEmpty()){
+					return false;
+				}else{
+					return true;
+				}
+
+
+			}else return false;
+
+		}).toList();
+
+		return entityDtoConverter.convertProfilesToDto(profilesBySpecialistId);
+    }
 }

@@ -39,8 +39,16 @@ public class ProfileController {
 	}*/
 
 	@GetMapping
-	public ResponseEntity<List<ProfileDtoResponse>> getProfilesByNameAndRoleId(@RequestParam String name,@RequestParam long roleId) throws RuntimeException {
-		List<ProfileDtoResponse> profiles = profileService.getProfilesByNameAndRoleId(name,roleId);
+	public ResponseEntity<List<ProfileDtoResponse>> getProfilesByNameAndRoleId(@RequestParam(value = "name") String name,
+																			   @RequestParam(value = "roleId") long roleId,
+																			   @RequestParam(value = "specialistId", required = false) Long specialistId) throws RuntimeException {
+		List<ProfileDtoResponse> profiles;
+		if(specialistId == null){
+			profiles = profileService.getProfilesByNameAndRoleId(name,roleId);
+		}else{
+			profiles = profileService.getProfilesByNameAndRoleIdAndSpecialistId(name,roleId,specialistId);
+		}
+
 		return new ResponseEntity<>(profiles, HttpStatus.OK);
 	}
 
