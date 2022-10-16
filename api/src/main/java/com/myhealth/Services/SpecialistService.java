@@ -90,4 +90,13 @@ public class SpecialistService {
 
 		return entityDtoConverter.convertSpecialistToDto(dto);
     }
+
+	public boolean deleteSpecialist(Long id) {
+		if (specialistRepository.existsById(id)) {
+			specialistRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

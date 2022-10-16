@@ -34,6 +34,15 @@ public class SpecialistController {
 		return new ResponseEntity<>(specialist, HttpStatus.OK);
 	}
 
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteSpecialist(@PathVariable Long id) {
+		if (!specialistService.deleteSpecialist(id)) {
+			return new ResponseEntity<>(id + " couldn't be deleted", HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<>(id + " deleted succesfully", HttpStatus.OK);
+		}
+	}
+
 	@PutMapping(path ="{specialistId}")
 	public ResponseEntity<SpecialistDtoResponse> putSpecialistSpecialty(@PathVariable("specialistId") Long specialistId, @RequestBody SpecialistDtoRequest specialistDtoRequest) throws RuntimeException {
 		//List<UserDtoResponse> users = userService.getUsers();
