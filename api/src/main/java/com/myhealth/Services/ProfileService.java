@@ -1,6 +1,8 @@
 package com.myhealth.Services;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +19,8 @@ import com.myhealth.Repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.myhealth.Entities.Profile.distinctByKey;
 
 @Transactional
 @Service
@@ -102,7 +106,7 @@ public class ProfileService {
 
     public List<ProfileDtoResponse> getProfilesByNameAndRoleIdAndSpecialistId(String name, long roleId, long specialistId) {
 		List<Profile> profilesByNameAndRoleId = profileRepository.findProfileByNameContainingAndRoleId(name,roleId);
-
+		List<Profile> profilesByLastNameAndRoleId = profileRepository.findProfileByLastNameContainingAndRoleId(name,roleId);
 		var profilesBySpecialistId = profilesByNameAndRoleId.stream().filter(profile -> {
 			var patient = patientRepository.findByProfileId(profile.getId());
 
@@ -122,6 +126,25 @@ public class ProfileService {
 
 		}).toList();
 
-		return entityDtoConverter.convertProfilesToDto(profilesBySpecialistId);
+		var profilesBySpecialistId2 = profilesByLastNameAndRoleId.stream().filter(profile -> {
+			var patient = patientRepository.findByProfileId(profile.getId());
+
+			if(patient.isPresent()){
+				var specialistList = patient.get().getSpecialistsPatients();
+
+				var existSpecialist = specialistList.stream().filter(specialist -> specialist.getId() == specialistId).toList();
+
+				if(existSpecialist.isEmpty()){
+					return false;
+				}else{
+					return true;
+				}
+			}else return false;
+
+		}).toList();
+
+		List<Profile> differences = Stream.concat(profilesBySpecialistId.stream(), profilesBySpecialistId2.stream()).toList();
+		differences = differences.stream().filter(distinctByKey(Profile::getId)).toList();
+		return entityDtoConverter.convertProfilesToDto(differences);
     }
 }

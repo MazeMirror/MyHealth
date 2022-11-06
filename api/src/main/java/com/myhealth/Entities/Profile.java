@@ -1,6 +1,10 @@
 package com.myhealth.Entities;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.persistence.*;
 
@@ -63,5 +67,11 @@ public class Profile {
 		this.gender = profileDtoRequest.getGender();
 		this.birthDate = profileDtoRequest.getBirthDate();
 		this.imageUrl = profileDtoRequest.getImageUrl();
+	}
+
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+		Set<Object> seen = ConcurrentHashMap.newKeySet();
+		return t -> seen.add(keyExtractor.apply(t));
 	}
 }

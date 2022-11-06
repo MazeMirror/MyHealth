@@ -40,9 +40,21 @@ public class UserService {
 	}
 
 	public UserDtoResponse authenticateUser(UserDtoRequest userDtoRequest) {
-		User user = userRepository.findByEmailAndPassword(userDtoRequest.getEmail(),userDtoRequest.getPassword())
-				.orElseThrow(() -> new RuntimeException("Invalid Email or Password"));
-		return entityDtoConverter.convertUserToDto(user);
+		User user = null;
+		UserDtoRequest userDtoRequest1 = new UserDtoRequest();
+		userDtoRequest1.setEmail("NoEmail");
+		userDtoRequest1.setPassword("NoPassword");
+		user = userRepository.findByEmail(userDtoRequest.getEmail())
+				.orElseThrow(() -> new RuntimeException("user specified not found"));
+		if (user != null) {
+			userDtoRequest1.setEmail(user.getEmail());
+			if (user.getPassword().equals( userDtoRequest.getPassword())) {
+				return entityDtoConverter.convertUserToDto(user);
+			}
+			userDtoRequest1.setEmail("NoPassword");
+		}
+		User aux = new User(userDtoRequest1);
+		return entityDtoConverter.convertUserToDto(aux);
 	}
 
 	public List<UserDtoResponse> getUsers() {

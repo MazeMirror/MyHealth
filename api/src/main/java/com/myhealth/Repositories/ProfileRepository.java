@@ -11,5 +11,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     Optional<Profile> findByUserId(long id);
     List<Profile> findProfileByNameContaining(String name);
     List<Profile> findProfileByNameContainingAndRoleId(String name,long roleId);
+    List<Profile> findProfileByLastNameContainingAndRoleId(String name,long roleId);
     List<Profile> findProfilesByRoleId(long roleId);
 }
