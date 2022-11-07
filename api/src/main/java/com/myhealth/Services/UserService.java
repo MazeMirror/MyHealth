@@ -1,6 +1,7 @@
 package com.myhealth.Services;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
@@ -49,13 +50,15 @@ public class UserService {
 		if (user != null) {
 			userDtoRequest1.setEmail(user.getEmail());
 			if (user.getPassword().equals( userDtoRequest.getPassword())) {
-				user.setId(-1L);
 				return entityDtoConverter.convertUserToDto(user);
 			}
 			userDtoRequest1.setEmail("NoPassword");
 		}
 
 		User aux = new User(userDtoRequest1);
+		if(Objects.equals(userDtoRequest1.getEmail(), "NoPassword")){
+			aux.setId(-1L);
+		}
 		return entityDtoConverter.convertUserToDto(aux);
 	}
 
